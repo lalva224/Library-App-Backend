@@ -31,10 +31,13 @@ public class Users implements UserDetails {
     private Integer id;
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true,columnDefinition = "varchar(255) default null")
     private String email;
+
+    @Column(unique = true)
+    private String username;
     private String password;
-    private String picture;
+
     @Column(columnDefinition = "varchar(255) default null")
     private String address;
     @Column(columnDefinition = "varchar(255) default null")
@@ -49,6 +52,7 @@ public class Users implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private List<Role> roles;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

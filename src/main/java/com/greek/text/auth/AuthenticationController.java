@@ -1,19 +1,19 @@
 package com.greek.text.auth;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
 
-  @Autowired
-  private AuthenticationService authenticationService;
+
+  private final AuthenticationService authenticationService;
+
 
   @PostMapping("/register")
   public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
@@ -23,5 +23,11 @@ public class AuthenticationController {
   @PostMapping("/login")
   public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
     return ResponseEntity.ok(authenticationService.authenticate(request));
+  }
+  @GetMapping("/user")
+  public ResponseEntity<UserResponse> getUserByUsername(@RequestParam String userName)
+  {
+    System.out.println(userName);
+    return ResponseEntity.ok().body(authenticationService.getUserByUsername(userName));
   }
 }
