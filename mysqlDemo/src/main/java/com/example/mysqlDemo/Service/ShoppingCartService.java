@@ -35,7 +35,7 @@ public class ShoppingCartService {
         return "added";
     }
     public String removeFromCart(int bookId, int userId){
-        Optional<ShoppingCart> cart= shoppingCartrepo.findById(getUser(userId));
+        Optional<ShoppingCart> cart= shoppingCartrepo.findById(userId);
         ShoppingCart cartItems = cart.orElse(new ShoppingCart());
         List<Book> books = cartItems.getBooks();
         books.remove(getBook(bookId));
@@ -47,7 +47,7 @@ public class ShoppingCartService {
 
     }
     public Optional<ShoppingCart> retrieveBook(int userId){
-        return shoppingCartrepo.findById(getUser(userId));
+        return shoppingCartrepo.findById(userId);
     }
     public double retrievePrice(int userId){
         List<Book> books = getBooksFromCart(userId);
@@ -62,7 +62,7 @@ public class ShoppingCartService {
 
     // helper methods
     public List<Book> getBooksFromCart(int userId){
-        Optional<ShoppingCart> cart= shoppingCartrepo.findById(getUser(userId));
+        Optional<ShoppingCart> cart= shoppingCartrepo.findById(userId);
         ShoppingCart cartItems = cart.orElse(new ShoppingCart());
         List<Book> books = cartItems.getBooks();
         return books;

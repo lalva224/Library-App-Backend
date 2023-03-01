@@ -1,28 +1,26 @@
 package com.example.mysqlDemo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 @Entity
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long isbn;
-    String name;
-    String description;
-    double price;
-    String author;
-    String genre;
-    String publisher;
-    int year;
-    int copiesSold;
+    private int isbn;
+    private String name;
+    private String description;
+    private double price;
+    private String author;
+    private String genre;
+    private String publisher;
+    private int year;
+    private int copiesSold;
 
     public long getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(long isbn) {
+    public void setIsbn(int isbn) {
         this.isbn = isbn;
     }
 

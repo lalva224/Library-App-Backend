@@ -1,19 +1,26 @@
 package com.example.mysqlDemo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.List;
 @Entity
 public class ShoppingCart {
     @Id
-    User user;
-    List<Book> books;
+    private int Id;
+    @OneToOne
+    private User user;
+    @OneToMany
+   private  List<Book> books;
 
     public User getUser() {
         return user;
     }
-
+    public int getId(User user){
+      return  user.getId();
+    }
+    public void setId(int id){
+        this.Id= id;
+    }
     public void setUser(User user) {
         this.user = user;
     }
