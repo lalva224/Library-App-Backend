@@ -15,9 +15,18 @@ public class Book {
     private String publisher;
     private int year;
     private int copiesSold;
+    private double rating;
 
-    public long getIsbn() {
+    public int getIsbn() {
         return isbn;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public double getRating() {
+        return rating;
     }
 
     public void setIsbn(int isbn) {
