@@ -10,6 +10,9 @@ import java.util.List;
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final BookRatingRepository bookRatingRepository;
+
+    private final BookCommentsRepository bookCommentsRepository;
 
     List<BookEntity> books() {
         return this.bookRepository.findAll();
@@ -24,6 +27,25 @@ public class BookService {
     BookEntity getByIsbn(Integer isbn)
     {
         return this.bookRepository.findByIsbn(isbn);
+    }
+
+    void ratingForBook(BooksRating booksRating)
+    {
+        this.bookRatingRepository.save(booksRating);
+    }
+
+    BookEntity getAllComments(Integer bookId)
+    {
+        return this.bookRepository.findByBookId(bookId);
+    }
+    void addCommentsForBooks(BooksComments booksComments)
+    {
+        this.bookCommentsRepository.save(booksComments);
+    }
+
+    Double avgRatingByBookId(Integer bookId)
+    {
+     return this.bookRatingRepository.findRatingById(bookId);
     }
 
 }

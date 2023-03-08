@@ -1,9 +1,6 @@
 package com.greek.text.book;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -38,4 +36,8 @@ public class BookEntity {
     private LocalDateTime createdAt;
     @UpdateTimestamp
     private LocalDateTime updatedAt;
+
+    @OneToMany(targetEntity = BooksComments.class,cascade = CascadeType.ALL)
+    @JoinColumn(name = "bookId",referencedColumnName = "bookId")
+    List<BooksComments> comments;
 }

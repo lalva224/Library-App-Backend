@@ -26,6 +26,8 @@ public class BooksComments {
 
     private Integer bookId;
     private String comments;
+
+    private Integer userId;
     @CreationTimestamp
     private LocalDateTime createdAt;
     @UpdateTimestamp

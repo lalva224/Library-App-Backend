@@ -9,4 +9,7 @@ public interface BookRepository extends JpaRepository<BookEntity,Integer> {
     List<BookEntity>findByAuthor(Integer id);
 
     BookEntity findByIsbn(Integer isbn);
+
+    BookEntity findByBookId(Integer bookId);
+
 }
