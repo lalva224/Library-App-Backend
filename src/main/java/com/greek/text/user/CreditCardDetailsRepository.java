@@ -1,10 +1,8 @@
-package com.greek.text.book;
+package com.greek.text.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BookCommentsRepository extends JpaRepository<BooksComments,Integer>
-{
-
+public interface CreditCardDetailsRepository extends JpaRepository<CreditCardDetails,Integer> {
 }

@@ -57,14 +57,6 @@ public class ApplicationConfig {
     return new DefaultSecretGenerator();
   }
 
-  @Bean
-  public QrGenerator qrGenerator() {
-    return new ZxingPngQrGenerator();
-  }
 
-  @Bean
-  public CodeVerifier codeVerifier() {
-    return new DefaultCodeVerifier(new DefaultCodeGenerator(), new SystemTimeProvider());
-  }
 
 }

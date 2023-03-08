@@ -50,6 +50,8 @@ public class Users implements UserDetails {
     @UpdateTimestamp
     private Instant updatedAt;
 
+
+
     @Enumerated(EnumType.STRING)
     private List<Role> roles;
 
@@ -62,7 +64,7 @@ public class Users implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return username;
     }
 
     @Override
@@ -89,4 +91,8 @@ public class Users implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    @OneToMany(targetEntity = CreditCardDetails.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
+    private List<CreditCardDetails> cards;
+
 }

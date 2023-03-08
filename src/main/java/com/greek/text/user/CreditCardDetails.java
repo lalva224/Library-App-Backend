@@ -25,6 +25,8 @@ public class CreditCardDetails {
     private Integer creditCardId;
 
     private String cardNumber;
+
+    private Integer userId;
     private Integer cardLastFourDigits;
     private  Integer expirationMonth;
     private  Integer expirationYear;

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -48,10 +50,18 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().roles(user.getRoles()).token(jwtToken).build();
     }
 
-    public UserResponse getUserByUsername(String userName)
-    {
+    public UserResponse getUserByUsername(String userName) {
 
-        System.out.println(userRepository.findByUsername(userName));
         return UserResponse.builder().userData(userRepository.findByUsername(userName)).build();
+    }
+
+    public UserResponse updateUserByUserName(Users users) {
+        Optional<Users> byUsername = userRepository.findByUsername(users.getUsername());
+        Users filteredUser = (Users) byUsername.get();
+        users.setId(filteredUser.getId());
+        users.setEmail(filteredUser.getEmail());
+        users.setUsername(filteredUser.getUsername());
+        userRepository.save(users);
+        return UserResponse.builder().userData(byUsername).build();
     }
 }

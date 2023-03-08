@@ -1,6 +1,8 @@
 package com.greek.text.auth;
 
 import java.util.List;
+
+import com.greek.text.user.CreditCardDetails;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +23,6 @@ public class RegisterRequest {
   private String username;
   private String password;
   private List<Role> roles;
+
+  private List<CreditCardDetails> cards;
 }
