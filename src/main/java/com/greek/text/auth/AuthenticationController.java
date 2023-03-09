@@ -33,7 +33,7 @@ public class AuthenticationController {
 
     @PutMapping("/user")
     public void updateUser(@RequestBody Users users) {
-        System.out.println(users);
+
         this.authenticationService.updateUserByUserName(users);
     }
 }

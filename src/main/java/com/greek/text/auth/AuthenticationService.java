@@ -64,6 +64,14 @@ public class AuthenticationService {
         users.setId(filteredUser.getId());
         users.setEmail(filteredUser.getEmail());
         users.setUsername(filteredUser.getUsername());
+
+        if(users.getPassword()!=null)
+        {
+            users.setPassword(passwordEncoder.encode(users.getPassword()));
+        }else
+        {
+            users.setPassword(filteredUser.getPassword());
+        }
         userRepository.save(users);
         return UserResponse.builder().userData(byUsername).build();
     }
