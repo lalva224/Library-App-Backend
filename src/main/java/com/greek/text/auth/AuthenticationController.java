@@ -1,10 +1,7 @@
 package com.greek.text.auth;
 
-import com.google.api.Http;
 import com.greek.text.user.Users;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +16,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        System.out.println(request);
+        System.out.println(request.getCards());
         return ResponseEntity.ok(authenticationService.register(request));
     }
 
