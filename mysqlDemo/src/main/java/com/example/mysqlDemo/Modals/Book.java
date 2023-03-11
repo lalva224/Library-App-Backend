@@ -11,6 +11,8 @@ public class Book {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
 
+    
+
     private String isbn;
     private String name;
     private String description;
@@ -20,6 +22,23 @@ public class Book {
     private String publisher;
     private int yearPublished;
     private int copiesSold;
+    private double rating;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
 
     public int getCopiesSold() {
         return copiesSold;
