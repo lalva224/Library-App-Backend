@@ -27,10 +27,10 @@ public class ShoppingCartService {
     }
 
     //http methods
-    public String addtoCart(int bookId, int userId){
+    public String addtoCart(int bookId, String userId){
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(getUser(userId));
-        shoppingCart.addBook(getBook(userId));
+        shoppingCart.addBook(getBook(bookId));
         shoppingCartrepo.save(shoppingCart);
         return "added";
     }
@@ -73,7 +73,7 @@ public class ShoppingCartService {
         Book book = optionalBook.orElse(new Book());
         return book;
     }
-    public User getUser(int userId){
+    public User getUser(String userId){
         Optional<User> optionalUser = findUser(userId);
         User user = optionalUser.orElse(new User());
         return user;
@@ -82,7 +82,7 @@ public class ShoppingCartService {
         return bookrepo.findById(bookId);
 
     }
-    public Optional<User> findUser(int userId){
+    public Optional<User> findUser(String userId){
         return userRepo.findById(userId);
     }
 }

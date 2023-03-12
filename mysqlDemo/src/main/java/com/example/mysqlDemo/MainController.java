@@ -21,7 +21,7 @@ public class MainController {
 
 
     @PostMapping("/post/shoppingCart/addBook")
-    public @ResponseBody String addBook(@RequestParam int bookId, @RequestParam int userId){
+    public @ResponseBody String addBook(@RequestParam int bookId, @RequestParam String userId){
         return shoppingCartService.addtoCart(bookId,userId);
 
     }@GetMapping("/get/shoppingCart/getBook")
