@@ -2,19 +2,30 @@ package com.example.mysqlDemo.Model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
+import java.util.Optional;
+
 @Entity
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int isbn;
     private String name;
-    private String description;
+    //private String description;
     private double price;
     private String author;
     private String genre;
     private String publisher;
     private int year;
     private int copiesSold;
+    @OneToMany
+    private List<BookRating> ratings;
+    private double rating = 0;
+    private boolean isRated = false;
+
+
+
 
     public long getIsbn() {
         return isbn;
@@ -32,13 +43,13 @@ public class Book {
         this.name = name;
     }
 
-    public String getDescription() {
+    /*public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
+    }*/
 
     public double getPrice() {
         return price;
@@ -87,4 +98,20 @@ public class Book {
     public void setCopiesSold(int copiesSold) {
         this.copiesSold = copiesSold;
     }
+
+    public void addRating(User user, int rating)
+    {
+        BookRating b = new BookRating(user, this, rating);
+        this.rating += Double.valueOf(rating);
+        double d = 0;
+        for(BookRating b2 : ratings)
+        {
+            d+= Double.valueOf(b2.getRating());
+        }
+
+        this.rating = d / Double.valueOf(ratings.size());
+        this.isRated = true;
+    }
+
+
 }
