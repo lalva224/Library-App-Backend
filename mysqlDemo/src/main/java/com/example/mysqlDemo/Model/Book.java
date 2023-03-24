@@ -10,24 +10,18 @@ public class Book {
     private String name;
     private String description;
     private double price;
-    private String author;
+    private int authorId;
     private String genre;
     private String publisher;
     private int year;
     private int copiesSold;
-    private double rating;
+
 
     public int getIsbn() {
         return isbn;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
 
-    public double getRating() {
-        return rating;
-    }
 
     public void setIsbn(int isbn) {
         this.isbn = isbn;
@@ -57,12 +51,12 @@ public class Book {
         this.price = price;
     }
 
-    public String getAuthor() {
-        return author;
+    public int getAuthor() {
+        return authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthor(Integer author) {
+        this.authorId = author;
     }
 
     public String getGenre() {
