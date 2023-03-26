@@ -78,7 +78,12 @@ public class BookRatingService
         Optional<Book> b = findBook(isbn);
         Book book = b.get();
 
-        String rating = String.format(book.getName() + " has a rating of %.2f", book.getRating());
+        if (book.getRating() == 0.0)
+        {
+            return null;
+        }
+
+        String rating = String.format(book.getName() + " has a rating of %.2f " + "out of 5.", book.getRating());
 
         return rating;
     }

@@ -60,6 +60,11 @@ public class MainController {
     @PostMapping("/post/bookRating/addRating")
     public @ResponseBody String addRating(@RequestParam int rating, @RequestParam String username, @RequestParam int isbn)
     {
+        if(rating > 5 || rating < 1)
+        {
+            return "Your rating must be between 1 and 5";
+        }
+
         bookRatingService.addRating(rating, username, isbn);
 
         return "You rating of " + rating + " has been added. Thank you!";
@@ -68,6 +73,11 @@ public class MainController {
     @GetMapping("/get/bookRating/getRating")
     public @ResponseBody String getRating(@RequestParam int isbn)
     {
+        if (bookRatingService.getRating(isbn) == null)
+        {
+            return "This book has no rating yet.";
+        }
+
         return bookRatingService.getRating(isbn);
     }
 
