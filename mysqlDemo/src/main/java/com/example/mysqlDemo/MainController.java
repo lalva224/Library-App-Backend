@@ -3,6 +3,7 @@ package com.example.mysqlDemo;
 
 import com.example.mysqlDemo.Model.ShoppingCart;
 import com.example.mysqlDemo.Model.User;
+import com.example.mysqlDemo.Service.BookRatingService;
 import com.example.mysqlDemo.Service.ShoppingCartService;
 import com.example.mysqlDemo.Service.ProfileManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,18 @@ import java.util.Optional;
 public class MainController {
     @Autowired
     private final ShoppingCartService shoppingCartService;
+
+    @Autowired
+    private final BookRatingService bookRatingService;
     
     @Autowired
     private final ProfileManagementService profileManagementService;
 
-    public MainController(ShoppingCartService shoppingCartService, ProfileManagementService profileManagementService){
+    public MainController(ShoppingCartService shoppingCartService, ProfileManagementService profileManagementService,
+                          BookRatingService bookRatingService){
         this.shoppingCartService = shoppingCartService;
         this.profileManagementService = profileManagementService;
+        this.bookRatingService = bookRatingService;
     }
     
     @PostMapping("/post/User/addUser")
@@ -49,6 +55,20 @@ public class MainController {
     @DeleteMapping("delete/shoppingCart/remove")
     public @ResponseBody String removeFromCart(int bookId, int userId){
         return shoppingCartService.removeFromCart(bookId,userId);
+    }
+
+    @PostMapping("/post/bookRating/addRating")
+    public @ResponseBody String addRating(@RequestParam int rating, @RequestParam String username, @RequestParam int isbn)
+    {
+        bookRatingService.addRating(rating, username, isbn);
+
+        return "You rating of " + rating + " has been added. Thank you!";
+    }
+
+    @GetMapping("/get/bookRating/getRating")
+    public @ResponseBody String getRating(@RequestParam int isbn)
+    {
+        return bookRatingService.getRating(isbn);
     }
 
 

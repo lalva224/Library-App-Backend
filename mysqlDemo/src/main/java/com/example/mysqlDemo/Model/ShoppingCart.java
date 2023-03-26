@@ -10,14 +10,14 @@ public class ShoppingCart {
     @OneToOne
     private User user;
     @OneToMany
-   private  List<Book> books;
+    private  List<Book> books;
 
     public User getUser() {
         return user;
     }
-    public int getId(User user){
+    /*public int getId(User user){
       return  user.getId();
-    }
+    }*/
     public void setId(int id){
         this.Id= id;
     }
