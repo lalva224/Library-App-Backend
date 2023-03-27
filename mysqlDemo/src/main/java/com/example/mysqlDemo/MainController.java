@@ -33,6 +33,11 @@ public class MainController {
     	return profileManagementService.getUser(username);
     	
     }
+    @PutMapping("put/User/putUser")
+    public @ResponseBody String updateUser(@RequestParam String username, @RequestParam String name, @RequestParam String email, @RequestParam String homeAddress, @RequestParam String password) {
+    	return profileManagementService.updateUser(username, name, homeAddress, password);
+    }
+    
 
     @PostMapping("/post/shoppingCart/addBook")
     public @ResponseBody String addBook(@RequestParam int bookId, @RequestParam String userId){

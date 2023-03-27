@@ -7,13 +7,14 @@ import jakarta.persistence.Id;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class CreditCard {
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
 	
 	private String username;
 	
     private String name;
+    
+    @Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Integer id;
     
     private Integer cardNumber;
     

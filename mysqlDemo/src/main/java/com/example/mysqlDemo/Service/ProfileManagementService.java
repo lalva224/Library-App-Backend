@@ -24,6 +24,26 @@ public class ProfileManagementService {
         return user;
     }	
 	
+	public String updateUser(String username, String name, String homeAddress, String password) {
+        Optional<User> optionalUser = retrieveUser(username);
+        User updateUser = optionalUser.orElse(new User());
+        if(updateUser == null) {
+        	return "User does not exists";
+        	
+        }
+        else {
+	        updateUser.setHomeAddress(homeAddress);
+	        updateUser.setName(name);
+	        updateUser.setUsername(username);
+	        updateUser.setPassword(password);
+			
+			userRepo.save(updateUser);
+	        
+			return "update";
+        }
+		
+	}
+	
 	// for post 
 	public String addUser(String name, String email, String homeAddress, String username, String password ){
 		
@@ -44,12 +64,7 @@ public class ProfileManagementService {
 	    return userRepo.findById(username);
 	}
 	
-	
-	public void saveUser() {
-		
-		
-	}
-	
+
 
 	
 	
