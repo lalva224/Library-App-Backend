@@ -2,6 +2,7 @@ package com.example.mysqlDemo.Model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,6 +21,9 @@ public class Book {
     private double rating;
     @OneToMany
     private List<BookRating> ratings;
+
+    @OneToMany
+    private List<BookComment> comments;
 
 
     public int getIsbn() {
@@ -112,6 +116,16 @@ public class Book {
         }
 
         this.rating = (double) temp / (double)ratings.size();
+    }
+
+    public void addComment(BookComment bookComment)
+    {
+        comments.add(bookComment);
+    }
+
+    public List<BookComment> getComments()
+    {
+        return comments;
     }
 
 

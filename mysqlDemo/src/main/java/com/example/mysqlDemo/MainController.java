@@ -3,6 +3,8 @@ package com.example.mysqlDemo;
 
 import com.example.mysqlDemo.Model.ShoppingCart;
 import com.example.mysqlDemo.Model.User;
+import com.example.mysqlDemo.Repo.BookCommentRepo;
+import com.example.mysqlDemo.Service.BookCommentService;
 import com.example.mysqlDemo.Service.BookRatingService;
 import com.example.mysqlDemo.Service.ShoppingCartService;
 import com.example.mysqlDemo.Service.ProfileManagementService;
@@ -22,12 +24,15 @@ public class MainController {
     
     @Autowired
     private final ProfileManagementService profileManagementService;
+    @Autowired
+    private final BookCommentService bookCommentService;
 
     public MainController(ShoppingCartService shoppingCartService, ProfileManagementService profileManagementService,
-                          BookRatingService bookRatingService){
+                          BookRatingService bookRatingService, BookCommentService bookCommentService){
         this.shoppingCartService = shoppingCartService;
         this.profileManagementService = profileManagementService;
         this.bookRatingService = bookRatingService;
+        this.bookCommentService = bookCommentService;
     }
     
     @PostMapping("/post/User/addUser")
@@ -84,6 +89,14 @@ public class MainController {
         }
 
         return bookRatingService.getRating(isbn);
+    }
+
+    @PostMapping("/post/bookComment/addComment")
+    public @ResponseBody String addComment(@RequestParam String comment, @RequestParam String username, @RequestParam int isbn)
+    {
+        bookCommentService.addComment(isbn, username, comment);
+
+        return "Thank you for your comment";
     }
 
 
