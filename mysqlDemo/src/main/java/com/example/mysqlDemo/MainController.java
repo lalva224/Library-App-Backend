@@ -1,16 +1,15 @@
 package com.example.mysqlDemo;
 
 
+import com.example.mysqlDemo.Model.BookComment;
 import com.example.mysqlDemo.Model.ShoppingCart;
 import com.example.mysqlDemo.Model.User;
 import com.example.mysqlDemo.Repo.BookCommentRepo;
-import com.example.mysqlDemo.Service.BookCommentService;
-import com.example.mysqlDemo.Service.BookRatingService;
-import com.example.mysqlDemo.Service.ShoppingCartService;
-import com.example.mysqlDemo.Service.ProfileManagementService;
+import com.example.mysqlDemo.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController // This means that this class is a Controller
@@ -97,6 +96,12 @@ public class MainController {
         bookCommentService.addComment(isbn, username, comment);
 
         return "Thank you for your comment";
+    }
+
+    @GetMapping("/get/bookComment/getcomments")
+    public @ResponseBody List<BookComment> getComments(@RequestParam int isbn)
+    {
+        return bookCommentService.getComments(isbn);
     }
 
 
