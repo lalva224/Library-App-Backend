@@ -8,6 +8,8 @@ import java.util.List;
 public class ShoppingCart {
     @Id
     private String username;
+    @OneToOne
+    private User user;
     @OneToMany
     private List<Book> books = new ArrayList<>();
 

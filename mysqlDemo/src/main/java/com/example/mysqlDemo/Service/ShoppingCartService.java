@@ -28,19 +28,19 @@ public class ShoppingCartService {
 
     //http methods
     public String addtoCart(int bookId, String username){
-        ShoppingCart shoppingCart = findShoppingCart(username);
-
-        if(shoppingCart==null) {
+        Optional<ShoppingCart> shoppingCartOptional = shoppingCartrepo.findById(username);
+        if(!shoppingCartOptional.isPresent()){
             ShoppingCart cart = new ShoppingCart();
-            cart.setUsername(username);
+             cart.setUsername(username);
             cart.addBook(findBook(bookId));
             shoppingCartrepo.save(cart);
 
         }
-        else
-        shoppingCart.addBook(findBook(bookId));
-        shoppingCartrepo.save(shoppingCart);
-
+        else {
+            ShoppingCart shoppingCart = shoppingCartOptional.orElse(new ShoppingCart());
+            shoppingCart.addBook(findBook(bookId));
+            shoppingCartrepo.save(shoppingCart);
+        }
         return "added";
     }
     public String removeFromCart(int bookId, String username){
