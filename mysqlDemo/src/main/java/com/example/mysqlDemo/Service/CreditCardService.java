@@ -9,7 +9,6 @@ import com.example.mysqlDemo.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,14 +16,38 @@ public class CreditCardService {
 	
 	@Autowired
     private final CreditCardRepo creditCardRepo;
+	private final UserRepository userRepo;
 
-    @Autowired
-    private final UserRepository userRepository;
-    
-    public CreditCardService(CreditCardRepo creditCardRepo, UserRepository userRepository){
+    public CreditCardService(CreditCardRepo creditCardRepo, UserRepository userRepo){
         this.creditCardRepo = creditCardRepo;
-        this.userRepository = userRepository;
-    }   
-      
+        this.userRepo = userRepo;
+    }
+
+
+	public String addCard(String username, String name, Integer cardNumber, Integer cvc, Integer expiration, Integer zipCode) {
+		CreditCard newCreditCard = new CreditCard();
+		newCreditCard.setUser(getUser(username));
+		newCreditCard.setName(name);
+		newCreditCard.setCardNumber(cardNumber);
+		newCreditCard.setCVC(cvc);
+		newCreditCard.setExpiration(expiration);
+		newCreditCard.setZipCode(zipCode);
+		
+		creditCardRepo.save(newCreditCard);
+
+		return "saved";
+	} 
+	
+	private User getUser(String username) {
+		Optional<User> optionalUser = retrieveUser(username);
+		User user = optionalUser.orElse(new User());
+        return user;
+	}
+
+
+	public Optional<User> retrieveUser(String username) {
+	    return userRepo.findById(username);
+	}
+	
 
 }

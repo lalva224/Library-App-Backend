@@ -14,13 +14,14 @@ public class ProfileManagementService {
     private final UserRepository userRepo;
 	
 	public ProfileManagementService(UserRepository userRepo){
-		this.userRepo= userRepo;
+		this.userRepo = userRepo;
     }
 	
 	// http method
 	public User getUser(String username){
         Optional<User> optionalUser = retrieveUser(username);
         User user = optionalUser.orElse(new User());
+        
         return user;
     }	
 	

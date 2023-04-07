@@ -1,3 +1,5 @@
 
 mysqlDemo/src/main/resources/application.properties
 mysqlDemo/src/main/resources/application.properties
+*.properties
+mysqlDemo/src/main/resources/application.properties

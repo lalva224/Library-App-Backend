@@ -1,20 +1,18 @@
 package com.example.mysqlDemo.Model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class CreditCard {
+	@Id
+	private String Id;
 	
-	private String username;
+	@OneToOne
+    private User username;
 	
     private String name;
-    
-    @Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
     
     private Integer cardNumber;
     
@@ -25,14 +23,22 @@ public class CreditCard {
     private Integer zipCode;
     
     
-    public Integer getId() {
-        return id;
-    }
+    public String getId(User username) {
+		return username.getUsername();
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
+	public void setId(String id) {
+		this.Id = id;
+	}
+    
+    public User getUser(){
+    	return username;
     }
-
+    
+    public void setUser(User username) {
+		this.username = username;
+	}
+    
     public String getName() {
         return name;
     }
@@ -45,7 +51,7 @@ public class CreditCard {
         return cardNumber;
     }
 
-    public void getCardNumber(Integer cardNumber) {
+    public void setCardNumber(Integer cardNumber) {
         this.cardNumber = cardNumber;
     }
     public Integer getCVC() {
@@ -72,12 +78,8 @@ public class CreditCard {
 		this.zipCode = zipCode;
 	}
 
-	public String getUsername() {
-		return username;
-	}
+	
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+	
 
 }
