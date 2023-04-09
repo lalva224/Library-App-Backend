@@ -4,7 +4,6 @@ package com.example.mysqlDemo;
 import com.example.mysqlDemo.Model.BookComment;
 import com.example.mysqlDemo.Model.ShoppingCart;
 import com.example.mysqlDemo.Model.User;
-import com.example.mysqlDemo.Model.CreditCard;
 import com.example.mysqlDemo.Service.CreditCardService;
 import com.example.mysqlDemo.Service.BookRatingService;
 import com.example.mysqlDemo.Service.ShoppingCartService;
@@ -31,7 +30,7 @@ public class MainController {
     @Autowired
     private final CreditCardService creditCardService; 
 
-   
+    @Autowired
     private final BookCommentService bookCommentService;
 
     public MainController(ShoppingCartService shoppingCartService, ProfileManagementService profileManagementService,
@@ -46,21 +45,25 @@ public class MainController {
     
     @PostMapping("/post/User/postUser")
     public @ResponseBody String addUser(@RequestParam String name, @RequestParam String email, @RequestParam String homeAddress, @RequestParam String username, @RequestParam String password) {
-    	return profileManagementService.addUser(name, email, homeAddress, username, password);
+    	profileManagementService.addUser(name, email, homeAddress, username, password);
+    	return "New user saved";
     }
     @GetMapping("/get/User/getUser")
     public @ResponseBody  User getUser(@RequestParam String username){
     	return profileManagementService.getUser(username);
-    	
     }
     @PutMapping("put/User/putUser")
     public @ResponseBody String updateUser(@RequestParam String username, @RequestParam String name, @RequestParam String email, @RequestParam String homeAddress, @RequestParam String password) {
-    	return profileManagementService.updateUser(username, name, homeAddress, password);
+		profileManagementService.updateUser(username, name, homeAddress, password);
+		return "User updated";
     }
-    @PostMapping("/post/User/postCard")
-    public @ResponseBody String addCard(@RequestParam String username,@RequestParam String name, @RequestParam Integer cardNumber,@RequestParam Integer cvc, @RequestParam Integer expiration,@RequestParam Integer zipCode) {
-    	return creditCardService.addCard(username, name, cardNumber, cvc, expiration, zipCode);
+    @PostMapping("/post/CreditCard/postCard")
+    public @ResponseBody String addCard(@RequestParam String username,@RequestParam String nameOncard, @RequestParam long cardNumber,@RequestParam int cvc, @RequestParam int expiration, @RequestParam int zipCode) {
+    	 
+    	creditCardService.addCard(username, nameOncard, cardNumber, cvc, expiration, zipCode);
+    	return "Credit card added"; 
     }
+    
 
     @PostMapping("/post/shoppingCart/addBook")
     public @ResponseBody String addBook(@RequestParam int bookId, @RequestParam String userId){

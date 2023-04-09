@@ -2,10 +2,8 @@ package com.example.mysqlDemo.Service;
 
 import com.example.mysqlDemo.Model.User;
 import com.example.mysqlDemo.Repo.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -16,38 +14,34 @@ public class ProfileManagementService {
 	public ProfileManagementService(UserRepository userRepo){
 		this.userRepo = userRepo;
     }
-	
-	// http method
+		
+	// retrieves user from database
 	public User getUser(String username){
-        Optional<User> optionalUser = retrieveUser(username);
-        User user = optionalUser.orElse(new User());
+		// finds user by username
+        Optional<User> optionalUser = userRepo.findById(username);
+        User user = optionalUser.get();
         
+        // returns user information
         return user;
     }	
-	
-	public String updateUser(String username, String name, String homeAddress, String password) {
-        Optional<User> optionalUser = retrieveUser(username);
-        User updateUser = optionalUser.orElse(new User());
-        if(updateUser == null) {
-        	return "User does not exists";
-        	
-        }
-        else {
-	        updateUser.setHomeAddress(homeAddress);
-	        updateUser.setName(name);
-	        updateUser.setUsername(username);
-	        updateUser.setPassword(password);
-			
-			userRepo.save(updateUser);
-	        
-			return "update";
-        }
+	// updates existing user without updating email
+	public void updateUser(String username, String name, String homeAddress, String password) {
+		// finds user by username
+        Optional<User> optionalUser = userRepo.findById(username);
+        User updateUser = optionalUser.get();
+        
+        // update values
+        updateUser.setHomeAddress(homeAddress);
+        updateUser.setName(name);
+        updateUser.setUsername(username);
+        updateUser.setPassword(password);
 		
+        // saves updates user
+		userRepo.save(updateUser);     
 	}
-	
-	// for post 
-	public String addUser(String name, String email, String homeAddress, String username, String password ){
-		
+	// adds new user to database
+	public void addUser(String name, String email, String homeAddress, String username, String password ){
+		// creates new user and add values
 		User newUser = new User();
 		newUser.setEmail(email);
 		newUser.setHomeAddress(homeAddress);
@@ -55,19 +49,7 @@ public class ProfileManagementService {
 		newUser.setUsername(username);
 		newUser.setPassword(password);
 		
+		// save new user
 		userRepo.save(newUser);
-		return "saved";
     }
-	
-	// helper method
-	// for get
-	public Optional<User> retrieveUser(String username) {
-	    return userRepo.findById(username);
-	}
-	
-
-
-	
-	
- 
 }

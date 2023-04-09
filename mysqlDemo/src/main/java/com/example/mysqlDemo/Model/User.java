@@ -15,7 +15,6 @@ public class User {
     private String email;
 
     private String homeAddress;
-
     
     private String password;
     
@@ -59,6 +58,7 @@ public class User {
     public String getPassword() {
     	return password;
 	}
+
 
 
 }

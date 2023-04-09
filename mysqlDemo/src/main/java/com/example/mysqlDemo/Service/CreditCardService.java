@@ -15,39 +15,31 @@ import java.util.Optional;
 public class CreditCardService {
 	
 	@Autowired
-    private final CreditCardRepo creditCardRepo;
-	private final UserRepository userRepo;
+    CreditCardRepo creditCardRepo;
+	@Autowired
+	UserRepository userRepo;
 
     public CreditCardService(CreditCardRepo creditCardRepo, UserRepository userRepo){
         this.creditCardRepo = creditCardRepo;
         this.userRepo = userRepo;
     }
 
-
-	public String addCard(String username, String name, Integer cardNumber, Integer cvc, Integer expiration, Integer zipCode) {
+	public void addCard(String username, String nameOncard, long cardNumber, int cvc, int expiration, int zipCode) {
+		// finds user by user name
+		Optional<User> optionalUser = userRepo.findById(username);
+		User user = optionalUser.get();
+		
+		// create new credit card for user
 		CreditCard newCreditCard = new CreditCard();
-		newCreditCard.setUser(getUser(username));
-		newCreditCard.setName(name);
+
+		newCreditCard.setCardForUser(user);
+		newCreditCard.setNameOncard(nameOncard);
 		newCreditCard.setCardNumber(cardNumber);
 		newCreditCard.setCVC(cvc);
 		newCreditCard.setExpiration(expiration);
 		newCreditCard.setZipCode(zipCode);
 		
+		// saves new card 
 		creditCardRepo.save(newCreditCard);
-
-		return "saved";
 	} 
-	
-	private User getUser(String username) {
-		Optional<User> optionalUser = retrieveUser(username);
-		User user = optionalUser.orElse(new User());
-        return user;
-	}
-
-
-	public Optional<User> retrieveUser(String username) {
-	    return userRepo.findById(username);
-	}
-	
-
 }
