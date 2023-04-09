@@ -1,6 +1,7 @@
 package com.example.mysqlDemo;
 
 
+import com.example.mysqlDemo.Model.BookComment;
 import com.example.mysqlDemo.Model.ShoppingCart;
 import com.example.mysqlDemo.Model.User;
 import com.example.mysqlDemo.Model.CreditCard;
@@ -8,9 +9,12 @@ import com.example.mysqlDemo.Service.CreditCardService;
 import com.example.mysqlDemo.Service.BookRatingService;
 import com.example.mysqlDemo.Service.ShoppingCartService;
 import com.example.mysqlDemo.Service.ProfileManagementService;
+import com.example.mysqlDemo.Repo.BookCommentRepo;
+import com.example.mysqlDemo.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController // This means that this class is a Controller
@@ -27,12 +31,17 @@ public class MainController {
     @Autowired
     private final CreditCardService creditCardService; 
 
+   
+    private final BookCommentService bookCommentService;
+
     public MainController(ShoppingCartService shoppingCartService, ProfileManagementService profileManagementService,
-                          BookRatingService bookRatingService, CreditCardService creditCardService){
+                          BookRatingService bookRatingService, BookCommentService bookCommentService, CreditCardService creditCardService){
         this.shoppingCartService = shoppingCartService;
         this.profileManagementService = profileManagementService;
         this.bookRatingService = bookRatingService;
+        this.bookCommentService = bookCommentService;
         this.creditCardService = creditCardService;
+
     }
     
     @PostMapping("/post/User/postUser")
@@ -92,6 +101,20 @@ public class MainController {
         }
 
         return bookRatingService.getRating(isbn);
+    }
+
+    @PostMapping("/post/bookComment/addComment")
+    public @ResponseBody String addComment(@RequestParam String comment, @RequestParam String username, @RequestParam int isbn)
+    {
+        bookCommentService.addComment(isbn, username, comment);
+
+        return "Thank you for your comment";
+    }
+
+    @GetMapping("/get/bookComment/getcomments")
+    public @ResponseBody List<BookComment> getComments(@RequestParam int isbn)
+    {
+        return bookCommentService.getComments(isbn);
     }
 
 

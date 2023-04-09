@@ -26,6 +26,7 @@ public class BookDetailService {
             book.setPublisher(publisher);
             book.setYear(yearPublished);
             book.setCopiesSold(copiesSold);
+            book.setRating(0);
 
             bookRepo.save(book);
 
