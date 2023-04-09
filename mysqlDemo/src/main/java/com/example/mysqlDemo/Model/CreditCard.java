@@ -6,38 +6,37 @@ import jakarta.persistence.OneToOne;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class CreditCard {
-	@Id
-	private String Id;
+
 	
-	@OneToOne
-    private User username;
+	//@OneToOne
+    private String username;
 	
     private String name;
+    @Id
+    private long cardNumber;
     
-    private Integer cardNumber;
+    private int cvc;
     
-    private Integer cvc;
+    private int expiration;
     
-    private Integer expiration;
-    
-    private Integer zipCode;
+    private int zipCode;
     
     
-    public String getId(User username) {
+   /* public String getId(User username) {
 		return username.getUsername();
-	}
+	}*/
 
-	public void setId(String id) {
-		this.Id = id;
-	}
-    
-    public User getUser(){
+
+    public String getUsername(){
     	return username;
     }
+    public void setUsername(String username) {
+        this.username = username;
+    }
     
-    public void setUser(User username) {
+    /*public void setUser(User username) {
 		this.username = username;
-	}
+	}*/
     
     public String getName() {
         return name;
@@ -47,34 +46,34 @@ public class CreditCard {
         this.name = name;
     }
     
-    public Integer getCardNumber() {
+    public long getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(Integer cardNumber) {
+    public void setCardNumber(long cardNumber) {
         this.cardNumber = cardNumber;
     }
-    public Integer getCVC() {
+    public int getCVC() {
         return cvc;
     }
 
-    public void setCVC(Integer cvc) {
+    public void setCVC(int cvc) {
         this.cvc = cvc;
     }
 
-	public Integer getExpiration() {
+	public int getExpiration() {
 		return expiration;
 	}
 
-	public void setExpiration(Integer expiration) {
+	public void setExpiration(int expiration) {
 		this.expiration = expiration;
 	}
 
-	public Integer getZipCode() {
+	public int getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(Integer zipCode) {
+	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 

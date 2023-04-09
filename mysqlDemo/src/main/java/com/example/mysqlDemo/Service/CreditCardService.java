@@ -23,10 +23,10 @@ public class CreditCardService {
         this.userRepo = userRepo;
     }
 
-
-	public String addCard(String username, String name, Integer cardNumber, Integer cvc, Integer expiration, Integer zipCode) {
+    
+	public String addCard(String username, String name, long cardNumber, Integer cvc, Integer expiration, Integer zipCode) {
 		CreditCard newCreditCard = new CreditCard();
-		newCreditCard.setUser(getUser(username));
+		newCreditCard.setUsername(username);
 		newCreditCard.setName(name);
 		newCreditCard.setCardNumber(cardNumber);
 		newCreditCard.setCVC(cvc);
@@ -38,7 +38,7 @@ public class CreditCardService {
 		return "saved";
 	} 
 	
-	private User getUser(String username) {
+	/*private User getUser(String username) {
 		Optional<User> optionalUser = retrieveUser(username);
 		User user = optionalUser.orElse(new User());
         return user;
@@ -47,7 +47,7 @@ public class CreditCardService {
 
 	public Optional<User> retrieveUser(String username) {
 	    return userRepo.findById(username);
-	}
+	}*/
 	
 
 }

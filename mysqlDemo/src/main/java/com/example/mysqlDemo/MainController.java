@@ -3,7 +3,6 @@ package com.example.mysqlDemo;
 
 import com.example.mysqlDemo.Model.ShoppingCart;
 import com.example.mysqlDemo.Model.User;
-import com.example.mysqlDemo.Model.CreditCard;
 import com.example.mysqlDemo.Service.CreditCardService;
 import com.example.mysqlDemo.Service.BookRatingService;
 import com.example.mysqlDemo.Service.ShoppingCartService;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController // This means that this class is a Controller
-@RequestMapping(path="/project") // This means URL's start with /demo (after Application path)
+@RequestMapping("/project") // This means URL's start with /demo (after Application path)
 public class MainController {
     @Autowired
     private final ShoppingCartService shoppingCartService;
@@ -48,8 +47,9 @@ public class MainController {
     public @ResponseBody String updateUser(@RequestParam String username, @RequestParam String name, @RequestParam String email, @RequestParam String homeAddress, @RequestParam String password) {
     	return profileManagementService.updateUser(username, name, homeAddress, password);
     }
-    @PostMapping("/post/User/postCard")
-    public @ResponseBody String addCard(@RequestParam String username,@RequestParam String name, @RequestParam Integer cardNumber,@RequestParam Integer cvc, @RequestParam Integer expiration,@RequestParam Integer zipCode) {
+    @PostMapping("/post/CreditCard/postCard")
+    public @ResponseBody String addCard(@RequestParam String username,@RequestParam String name, @RequestParam long cardNumber,@RequestParam int cvc, @RequestParam int expiration,@RequestParam int zipCode) {
+    	System.out.println("card");
     	return creditCardService.addCard(username, name, cardNumber, cvc, expiration, zipCode);
     }
 
