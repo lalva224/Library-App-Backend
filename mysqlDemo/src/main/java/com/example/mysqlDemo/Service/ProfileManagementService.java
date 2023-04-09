@@ -39,9 +39,11 @@ public class ProfileManagementService {
         // saves updates user
 		userRepo.save(updateUser);     
 	}
+
 	// adds new user to database
 	public void addUser(String name, String email, String homeAddress, String username, String password ){
 		// creates new user and add values
+
 		User newUser = new User();
 		newUser.setEmail(email);
 		newUser.setHomeAddress(homeAddress);
@@ -52,4 +54,5 @@ public class ProfileManagementService {
 		// save new user
 		userRepo.save(newUser);
     }
+
 }
