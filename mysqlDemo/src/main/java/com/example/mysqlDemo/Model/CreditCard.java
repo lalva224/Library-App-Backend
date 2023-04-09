@@ -1,80 +1,73 @@
 package com.example.mysqlDemo.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import java.util.Optional;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class CreditCard {
 	@Id
-	private String Id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	int Id;
 	
-	@OneToOne
-    private User username;
+	@ManyToOne
+    @JoinColumn(name = "card_for_user", referencedColumnName = "username")
+    private User cardForUser;
 	
-    private String name;
+    private String nameOncard;
     
-    private Integer cardNumber;
+    private long cardNumber;
     
-    private Integer cvc;
+    private int cvc;
     
-    private Integer expiration;
+    private int expiration;
     
-    private Integer zipCode;
+    private int zipCode;
     
     
-    public String getId(User username) {
-		return username.getUsername();
-	}
-
-	public void setId(String id) {
-		this.Id = id;
-	}
-    
-    public User getUser(){
-    	return username;
+    public User getCardForUser(){
+    	return cardForUser;
     }
     
-    public void setUser(User username) {
-		this.username = username;
+    public void setCardForUser(User cardForUser) {
+		this.cardForUser = cardForUser;
 	}
     
     public String getName() {
-        return name;
+        return nameOncard;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameOncard(String nameOncard) {
+        this.nameOncard = nameOncard;
     }
     
-    public Integer getCardNumber() {
+    public long getCardNumber() {
         return cardNumber;
     }
 
-    public void setCardNumber(Integer cardNumber) {
+    public void setCardNumber(long cardNumber) {
         this.cardNumber = cardNumber;
     }
-    public Integer getCVC() {
+    public int getCVC() {
         return cvc;
     }
 
-    public void setCVC(Integer cvc) {
+    public void setCVC(int cvc) {
         this.cvc = cvc;
     }
 
-	public Integer getExpiration() {
+	public int getExpiration() {
 		return expiration;
 	}
 
-	public void setExpiration(Integer expiration) {
+	public void setExpiration(int expiration) {
 		this.expiration = expiration;
 	}
 
-	public Integer getZipCode() {
+	public int getZipCode() {
 		return zipCode;
 	}
 
-	public void setZipCode(Integer zipCode) {
+	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 

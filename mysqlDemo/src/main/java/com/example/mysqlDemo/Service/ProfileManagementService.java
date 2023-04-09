@@ -2,7 +2,6 @@ package com.example.mysqlDemo.Service;
 
 import com.example.mysqlDemo.Model.User;
 import com.example.mysqlDemo.Repo.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +16,15 @@ public class ProfileManagementService {
 		this.userRepo = userRepo;
     }
 	
-	// http method
+	// http methods
 	public User getUser(String username){
-        Optional<User> optionalUser = retrieveUser(username);
+        Optional<User> optionalUser = userRepo.findById(username);
         User user = optionalUser.orElse(new User());
-        
         return user;
     }	
 	
 	public String updateUser(String username, String name, String homeAddress, String password) {
-        Optional<User> optionalUser = retrieveUser(username);
+        Optional<User> optionalUser = userRepo.findById(username);
         User updateUser = optionalUser.orElse(new User());
         if(updateUser == null) {
         	return "User does not exists";
@@ -45,7 +43,6 @@ public class ProfileManagementService {
 		
 	}
 	
-	// for post 
 	public String addUser(String name, String email, String homeAddress, String username, String password ){
 		
 		User newUser = new User();
@@ -59,15 +56,4 @@ public class ProfileManagementService {
 		return "saved";
     }
 	
-	// helper method
-	// for get
-	public Optional<User> retrieveUser(String username) {
-	    return userRepo.findById(username);
-	}
-	
-
-
-	
-	
- 
 }
