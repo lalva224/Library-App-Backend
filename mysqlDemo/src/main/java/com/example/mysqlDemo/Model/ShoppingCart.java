@@ -8,29 +8,34 @@ import java.util.List;
 public class ShoppingCart {
     @Id
     private String username;
-    @OneToOne
-    private User user;
-    @OneToMany
-    private List<Book> books = new ArrayList<>();
+    @ElementCollection
+    private List<Integer> isbnList = new ArrayList<Integer>();
 
+    public void addIsbn(int bookId){
+        isbnList.add(bookId);
+    }
+    public void removeIsbn(int bookId){
+        isbnList.remove(Integer.valueOf(bookId));
+    }
+    public boolean isEmpty(){
+        return isbnList.isEmpty();
+    }
+
+//    public int getIsbn() {
+//        return isbn;
+//    }
+//
+//    public void setIsbn(int isbn) {
+//        this.isbn = isbn;
+//    }
 
     public void setUsername(String username){this.username = username;}
 
-    public void addBook(Book book){
-       books.add(book);
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setBooks(List<Book> book){
-        this.books = book;
-    }
-
-    public void removeBook(Book book){
-        books.remove(book);
-    }
-
-    public List<Book> getBooks(){
-        return books;
-    }
 
 
 }

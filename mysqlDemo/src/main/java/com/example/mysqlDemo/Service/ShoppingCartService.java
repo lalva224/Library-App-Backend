@@ -9,8 +9,12 @@ import com.example.mysqlDemo.Repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 @Service
 public class ShoppingCartService {
     @Autowired
@@ -28,37 +32,54 @@ public class ShoppingCartService {
 
     //http methods
     public String addtoCart(int bookId, String username){
-        Optional<ShoppingCart> shoppingCartOptional = shoppingCartrepo.findById(username);
-        if(!shoppingCartOptional.isPresent()){
-            ShoppingCart cart = new ShoppingCart();
-             cart.setUsername(username);
-            cart.addBook(findBook(bookId));
-            shoppingCartrepo.save(cart);
 
-        }
-        else {
-            ShoppingCart shoppingCart = shoppingCartOptional.orElse(new ShoppingCart());
-            shoppingCart.addBook(findBook(bookId));
-            shoppingCartrepo.save(shoppingCart);
-        }
+    Optional<ShoppingCart> shoppingCartOptional = shoppingCartrepo.findById(username);
+     if(shoppingCartOptional.isPresent()){
+         ShoppingCart shoppingCart = shoppingCartOptional.orElse(new ShoppingCart());
+         shoppingCart.addIsbn(bookId);
+         shoppingCartrepo.save(shoppingCart);
+     }
+     else{
+         ShoppingCart shoppingCart = new ShoppingCart();
+         shoppingCart.setUsername(username);
+         shoppingCart.addIsbn(bookId);
+         shoppingCartrepo.save(shoppingCart);
+     }
+
+
         return "added";
+
+
     }
     public String removeFromCart(int bookId, String username){
         ShoppingCart cartItems = findShoppingCart(username);
-        cartItems.removeBook(findBook(bookId));
+        cartItems.removeIsbn(bookId);
 
-        shoppingCartrepo.save(cartItems);
+        if(cartItems.isEmpty()){
+            shoppingCartrepo.delete(cartItems);
+        }
+        else{
+            shoppingCartrepo.save(cartItems);
+        }
+
         return "removed";
 
     }
-    public List<Book> getBooksFromCart(String username){
-        Optional<ShoppingCart> cart= shoppingCartrepo.findById(username);
-        ShoppingCart cartItems = cart.orElse(new ShoppingCart());
-        List<Book> books = cartItems.getBooks();
-        return books;
+    public List<Book> getBooksFromCart(String username) throws ExecutionException, InterruptedException {
+
+      Future<List<Integer>> isbns = shoppingCartrepo.getBooksByUsername(username);
+
+      List<Book> books = new ArrayList<>();
+
+      isbns.get().forEach((i) -> {
+          Optional<Book> optionalBook =bookrepo.findById(i);
+          Book book = optionalBook.orElse(new Book());
+          books.add(book) ;
+      });
+            return books;
     }
 
-    public double retrievePrice(String username){
+    public double retrievePrice(String username) throws ExecutionException, InterruptedException{
         List<Book> books = getBooksFromCart(username);
         double price = 0;
 

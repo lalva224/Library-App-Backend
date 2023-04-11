@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 @RestController
 @RequestMapping(path="/project") // This means URL's start with /demo (after Application path)
@@ -32,15 +33,15 @@ public class MainController {
 
     }
     @GetMapping("/get/shoppingCart/getBook")
-    public @ResponseBody List<Book> getBooks (@RequestParam String username){
+    public @ResponseBody List<Book> getBooks (@RequestParam String username) throws ExecutionException, InterruptedException {
         return shoppingCartService.getBooksFromCart(username);
     }
     @GetMapping("/get/shoppingCart/getPrice")
-    public @ResponseBody double getPrice (@RequestParam String username){
+    public @ResponseBody double getPrice (@RequestParam String username)throws ExecutionException, InterruptedException{
         return shoppingCartService.retrievePrice(username);
     }
     @DeleteMapping("delete/shoppingCart/remove")
-    public @ResponseBody String removeFromCart ( @RequestParam int bookId, @RequestParam String username){
+    public @ResponseBody String removeFromCart ( @RequestParam int bookId, @RequestParam String username) {
         return shoppingCartService.removeFromCart(bookId, username);
     }
     //profileManagement
