@@ -1,9 +1,7 @@
 package com.example.mysqlDemo;
 
 
-import com.example.mysqlDemo.Model.BookComment;
-import com.example.mysqlDemo.Model.ShoppingCart;
-import com.example.mysqlDemo.Model.User;
+import com.example.mysqlDemo.Model.*;
 import com.example.mysqlDemo.Service.CreditCardService;
 import com.example.mysqlDemo.Service.BookRatingService;
 import com.example.mysqlDemo.Service.ShoppingCartService;
@@ -33,13 +31,17 @@ public class MainController {
     @Autowired
     private final BookCommentService bookCommentService;
 
+    @Autowired
+    private final  WishListService wishListService;
+
     public MainController(ShoppingCartService shoppingCartService, ProfileManagementService profileManagementService,
-                          BookRatingService bookRatingService, BookCommentService bookCommentService, CreditCardService creditCardService){
+                          BookRatingService bookRatingService, BookCommentService bookCommentService, CreditCardService creditCardService,WishListService wishListService){
         this.shoppingCartService = shoppingCartService;
         this.profileManagementService = profileManagementService;
         this.bookRatingService = bookRatingService;
         this.bookCommentService = bookCommentService;
         this.creditCardService = creditCardService;
+        this.wishListService = wishListService;
 
     }
     
@@ -118,6 +120,30 @@ public class MainController {
     public @ResponseBody List<BookComment> getComments(@RequestParam int isbn)
     {
         return bookCommentService.getComments(isbn);
+    }
+
+
+    @PostMapping("/add-wishlist")
+    public String createWishList(@RequestBody WishList addItemInWishListRequest) {
+
+        return this.wishListService.saveWishList(addItemInWishListRequest);
+    }
+
+    @PostMapping("/add-book-in-wishlist")
+    public String addBookInWishList(@RequestBody WishListBooks wishListBooks) {
+        return this.wishListService.addBookInWishList(wishListBooks);
+    }
+
+    @DeleteMapping("/delete-by-bookId-and-wishlistId")
+    public String deleteBookByBookIdAndWishListId(@RequestBody WishListBooks wishListBooks)
+    {
+        return this.wishListService.deleteBookByBookIdAndWishListId(wishListBooks.getIsbn(),wishListBooks.getWishListId());
+    }
+
+    @GetMapping("/list-books-by-wishlist-id/{wishlistId}")
+    public List<WishList> listOfBooksInWishList(@PathVariable String wishlistId)
+    {
+        return this.wishListService.getBookListByWishList(Integer.parseInt(wishlistId));
     }
 
 
